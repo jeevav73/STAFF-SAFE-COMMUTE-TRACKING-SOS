@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ActiveJourneyScreen } from '../screens/journey/ActiveJourneyScreen';
 import { ConsentScreen } from '../screens/journey/ConsentScreen';
 import { JourneySetupScreen } from '../screens/journey/JourneySetupScreen';
@@ -15,16 +16,20 @@ import { JourneyDetailsScreen } from '../screens/staff/JourneyDetailsScreen';
 import { JourneyHistoryScreen } from '../screens/staff/JourneyHistoryScreen';
 import { StaffHomeScreen } from '../screens/staff/StaffHomeScreen';
 import type { StaffStackParamList, StaffTabParamList } from '../types/navigation';
-import { stackOptions, tabOptions } from './options';
+import { stackOptions, tabIcon, tabOptions } from './options';
 
 const Tab = createBottomTabNavigator<StaffTabParamList>();
 const Stack = createNativeStackNavigator<StaffStackParamList>();
 
 function StaffTabs() {
+  const insets = useSafeAreaInsets();
   return (
-    <Tab.Navigator screenOptions={tabOptions}>
+    <Tab.Navigator screenOptions={({ route }) => ({
+      ...tabOptions(insets.bottom),
+      tabBarIcon: tabIcon(route.name),
+    })}>
       <Tab.Screen name="Home" component={StaffHomeScreen} options={{ title: 'Home' }} />
-      <Tab.Screen name="History" component={JourneyHistoryScreen} options={{ title: 'My journeys' }} />
+      <Tab.Screen name="History" component={JourneyHistoryScreen} options={{ title: 'History' }} />
       <Tab.Screen name="Settings" component={SettingsScreen} options={{ title: 'Settings' }} />
     </Tab.Navigator>
   );

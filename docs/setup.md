@@ -8,7 +8,6 @@ Nothing here contains real credentials; you create your own.
 - Node.js 20+ and npm.
 - A Supabase project (Free tier is fine for development). The Supabase CLI (`npx supabase`).
 - An Expo account and EAS CLI (`npx eas-cli@latest`) for builds and push credentials.
-- A Google Cloud project with **Maps SDK for Android** enabled.
 - A Firebase project (for FCM push on Android).
 - For local Android builds: Android Studio (SDK 35+), JDK 17. Not needed if you build with EAS.
 - For database tests: PostgreSQL 15+ (any local install or Docker).
@@ -167,11 +166,15 @@ For a **development** project only, `node scripts/operator.mjs seed-dev` creates
 
 ## 8. Maps
 
-1. Google Cloud Console → enable **Maps SDK for Android**.
-2. Create an API key restricted to **Android apps**, package `com.staffsafecommute.app`, and your signing certificate SHA-1 (debug, upload and Play app-signing certificates).
-3. Put it in `.env` as `EXPO_PUBLIC_MAPS_API_KEY` (or as the EAS secret `GOOGLE_MAPS_ANDROID_API_KEY`). It is embedded in the APK by design; the restriction is what protects it.
-
-Without a key the app still works and shows coordinates with an "Open in maps" button instead of a map.
+The app uses Leaflet with OpenStreetMap tiles inside the app. It requires no API key, Google Cloud
+account, or billing setup. Rebuild the development app once after installing the native WebView
+dependency; no rebuild is needed for map credentials. An internet connection is required to load
+tiles. The public OpenStreetMap tile service is intended for reasonable interactive use, has no
+service-level guarantee, and must be used according to its
+[tile usage policy](https://operations.osmfoundation.org/policies/tiles/). Visible map attribution is
+included in the app. The map viewport and tile requests are sent to the public tile service, so use
+a commercial tile provider with an appropriate privacy agreement and usage plan for production
+scale or stricter location privacy requirements.
 
 ## 9. Push notifications
 
@@ -186,7 +189,6 @@ Without a key the app still works and shows coordinates with an "Open in maps" b
 EXPO_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co
 EXPO_PUBLIC_SUPABASE_ANON_KEY=<anon or publishable key>
 EXPO_PUBLIC_EAS_PROJECT_ID=<eas project id>
-EXPO_PUBLIC_MAPS_API_KEY=<restricted Android maps key>
 ```
 
 ## 11. Build and run a development build

@@ -8,7 +8,6 @@ export const config = {
     process.env.EXPO_PUBLIC_EAS_PROJECT_ID ??
     (Constants.expoConfig?.extra as { eas?: { projectId?: string } } | undefined)?.eas?.projectId ??
     '',
-  mapsConfigured: Boolean((Constants.expoConfig?.extra as { mapsConfigured?: boolean } | undefined)?.mapsConfigured),
   // Demo mode only labels the UI; it never substitutes fake GPS. It is ignored in release builds.
   demoMode: __DEV__ && process.env.EXPO_PUBLIC_DEMO_MODE === 'true',
 };

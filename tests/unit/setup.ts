@@ -53,10 +53,10 @@ jest.mock('expo-notifications', () => ({
 
 jest.mock('expo-device', () => ({ isDevice: true }));
 
-jest.mock('react-native-maps', () => {
+jest.mock('react-native-webview', () => {
   const { View } = require('react-native');
   const Mock = (props: object) => require('react').createElement(View, props);
-  return { __esModule: true, default: Mock, Marker: Mock, Circle: Mock, PROVIDER_GOOGLE: 'google' };
+  return { WebView: Mock };
 });
 
 jest.mock('expo-linking', () => ({

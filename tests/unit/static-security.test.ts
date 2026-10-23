@@ -37,6 +37,6 @@ test('.env files with real values are git-ignored', () => {
 });
 
 test('.env.example contains placeholders only', () => {
-  const lines = fs.readFileSync(path.join(root, '.env.example'), 'utf8').split('\n').filter((l) => /^[A-Z_]+=/.test(l));
+  const lines = fs.readFileSync(path.join(root, '.env.example'), 'utf8').split(/\r?\n/).filter((l) => /^[A-Z_]+=/.test(l));
   for (const l of lines) expect(l).toMatch(/^[A-Z_]+=(|false)$/);
 });

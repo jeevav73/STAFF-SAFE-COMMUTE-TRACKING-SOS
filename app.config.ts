@@ -1,9 +1,5 @@
 import type { ConfigContext, ExpoConfig } from 'expo/config';
 
-// Build-time configuration. Only public values belong here: anything in this file or in an
-// EXPO_PUBLIC_ variable ends up inside the APK. The Google Maps key is embedded by design and
-// must be restricted to this package name + signing certificate in Google Cloud Console.
-const googleMapsApiKey = process.env.GOOGLE_MAPS_ANDROID_API_KEY ?? process.env.EXPO_PUBLIC_MAPS_API_KEY ?? '';
 // Existing EAS project (owner jeevacreatigns-team). Public identifiers, not secrets; builds started
 // from GitHub read them from this file before any EAS environment variables are loaded.
 const EAS_OWNER = 'jeevacreatigns-team';
@@ -66,10 +62,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       'expo-notifications',
       { color: '#1B2A4A', defaultChannel: 'journey-updates' },
     ],
-    ['react-native-maps', { androidGoogleMapsApiKey: googleMapsApiKey }],
   ],
-  extra: {
-    eas: { projectId: easProjectId },
-    mapsConfigured: googleMapsApiKey.length > 0,
-  },
+  extra: { eas: { projectId: easProjectId } },
 });

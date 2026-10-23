@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ActiveJourneysScreen } from '../screens/admin/ActiveJourneysScreen';
 import { AdminDashboardScreen } from '../screens/admin/AdminDashboardScreen';
 import { AdminJourneyDetailScreen } from '../screens/admin/AdminJourneyDetailScreen';
@@ -14,17 +15,21 @@ import { SOSDetailScreen } from '../screens/admin/SOSDetailScreen';
 import { StaffListScreen } from '../screens/admin/StaffListScreen';
 import { ProfileScreen } from '../screens/settings/ProfileScreen';
 import type { AdminStackParamList, AdminTabParamList } from '../types/navigation';
-import { stackOptions, tabOptions } from './options';
+import { stackOptions, tabIcon, tabOptions } from './options';
 
 const Tab = createBottomTabNavigator<AdminTabParamList>();
 const Stack = createNativeStackNavigator<AdminStackParamList>();
 
 function AdminTabs() {
+  const insets = useSafeAreaInsets();
   return (
-    <Tab.Navigator screenOptions={tabOptions}>
+    <Tab.Navigator screenOptions={({ route }) => ({
+      ...tabOptions(insets.bottom),
+      tabBarIcon: tabIcon(route.name),
+    })}>
       <Tab.Screen name="Dashboard" component={AdminDashboardScreen} options={{ title: 'Dashboard' }} />
-      <Tab.Screen name="Journeys" component={ActiveJourneysScreen} options={{ title: 'Active journeys' }} />
-      <Tab.Screen name="Alerts" component={SOSAlertsScreen} options={{ title: 'SOS alerts' }} />
+      <Tab.Screen name="Journeys" component={ActiveJourneysScreen} options={{ title: 'Journeys' }} />
+      <Tab.Screen name="Alerts" component={SOSAlertsScreen} options={{ title: 'Alerts' }} />
       <Tab.Screen name="Staff" component={StaffListScreen} options={{ title: 'Staff' }} />
       <Tab.Screen name="More" component={AdminMoreScreen} options={{ title: 'More' }} />
     </Tab.Navigator>

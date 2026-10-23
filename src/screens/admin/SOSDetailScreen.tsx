@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { AppButton } from '../../components/AppButton';
 import { FreshnessBadge, JourneyStatusBadge, SosStatusBadge, sosStatusLabel } from '../../components/Badges';
 import { Card, KeyValue } from '../../components/Card';
-import { MapPanel, openInMaps } from '../../components/MapPanel';
+import { MapPanel } from '../../components/MapPanel';
 import { Screen } from '../../components/Screen';
 import { ErrorState, LoadingState } from '../../components/States';
 import { TextField } from '../../components/TextField';
@@ -94,8 +94,6 @@ export function SOSDetailScreen({ route }: Props) {
             <KeyValue label="Observed" value={formatDateTime(a.location_observed_at)} />
             <KeyValue label="Accuracy" value={a.accuracy_m != null ? `± ${Math.round(a.accuracy_m)} m` : 'Unknown'} />
             <KeyValue label="Source" value={a.location_source === 'device' ? 'Sent by the phone with the SOS' : 'Last position the server had'} />
-            <AppButton title="Open in maps" variant="secondary" style={{ marginTop: spacing.sm }}
-              onPress={() => openInMaps(a.latitude!, a.longitude!, data.employee.full_name)} />
           </>
         ) : <Text style={typography.body}>No location was available when this SOS was raised.</Text>}
       </Card>

@@ -33,7 +33,7 @@ Use separate Supabase projects for development, staging and production. Never ru
 }
 ```
 
-Store `EXPO_PUBLIC_*` values and `GOOGLE_MAPS_ANDROID_API_KEY` as EAS environment variables for the matching environment (development, preview, production), via expo.dev → Project → Environment variables or `npx eas-cli@latest env:create`. Each build profile reads its `environment`. Never put the service-role key there.
+Store `EXPO_PUBLIC_*` values as EAS environment variables for the matching environment (development, preview, production), via expo.dev → Project → Environment variables or `npx eas-cli@latest env:create`. Each build profile reads its `environment`. Never put the service-role key there.
 
 ## Changing the consent text
 

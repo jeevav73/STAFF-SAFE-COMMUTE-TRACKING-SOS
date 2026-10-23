@@ -20,7 +20,7 @@ bundled compatibility map.
 | Privileged ops needing the service role | Edge Functions (`invite-user`, `dispatch-notifications`) and the operator CLI (`scripts/operator.mjs`) | Only these need the service-role key; it stays in Supabase function secrets or the operator's shell. |
 | Expiry | `expire_journeys()` SQL run by `pg_cron` every minute **and** checked inline in every location upload | Server rejects uploads after `expires_at` even if cron is late or the phone is offline. |
 | Location | `expo-location` + `expo-task-manager` with an Android foreground service (persistent notification) | Platform-supported background API. |
-| Map | `react-native-maps` (Google Maps SDK on Android) | Needs a Google Maps Android API key. |
+| Map | `react-native-webview` + Leaflet + OpenStreetMap tiles | No API key or billing account; public tile service requires internet and has a usage policy. |
 | Push | `expo-notifications` + Expo Push Service (FCM underneath) | Server-side dispatch from an Edge Function. |
 | Session storage | `expo-secure-store` (chunked) for Supabase auth tokens | Tokens encrypted at rest via Android Keystore. |
 | Validation | Zod 4 on the client; the same rules are re-enforced in SQL | Client validation is UX only. |
@@ -77,7 +77,6 @@ Default interval: 30 s / 25 m, `Accuracy.Balanced` when moving. Configurable in 
 | `EXPO_PUBLIC_SUPABASE_URL` | `.env` (app) | Public |
 | `EXPO_PUBLIC_SUPABASE_ANON_KEY` (or publishable key) | `.env` (app) | Public, RLS-protected |
 | `EXPO_PUBLIC_EAS_PROJECT_ID` | `.env` (app) — needed for Expo push tokens | Public |
-| `GOOGLE_MAPS_ANDROID_API_KEY` | EAS secret / `.env` at build time, injected by `app.config.ts`; restrict by package name + SHA-1 | Embedded in APK (restricted) |
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase Edge Function secrets only (auto-provided) | **Secret** |
 | `EXPO_ACCESS_TOKEN` (optional, enhanced push security) | Supabase function secrets | **Secret** |
 | `CRON_SECRET` | Supabase function secrets + pg_cron job header (for `dispatch-notifications`) | **Secret** |

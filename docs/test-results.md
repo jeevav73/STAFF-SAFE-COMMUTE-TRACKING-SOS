@@ -36,5 +36,5 @@ Security behaviours verified by the DB suite include: anonymous access denied on
 | Realtime authorisation end-to-end | **Not run** | Relies on Supabase Realtime applying RLS to `postgres_changes`; verify with two accounts on a real project. |
 | Push delivery (Expo/FCM) | **Not run** | Needs EAS project + FCM credentials and devices. |
 | Invite and password-reset emails, deep links | **Not run** | Needs Supabase Auth email + a device build. |
-| Google Maps rendering | **Not run** | Needs a restricted Maps key and a device build. |
+| OpenStreetMap rendering | **Not run** | Needs an Android device build and internet access to the public tile service. |
 | Screen-reader pass (TalkBack) | **Not run** | Needs a device. |

@@ -5,7 +5,7 @@
 | Symptom | Check |
 |---|---|
 | "App not configured" screen | `.env` missing `EXPO_PUBLIC_SUPABASE_URL` / `EXPO_PUBLIC_SUPABASE_ANON_KEY`; restart Metro with `--clear` after editing. |
-| Map shows "Map unavailable" | No `EXPO_PUBLIC_MAPS_API_KEY` at build time, or key not restricted correctly (check `adb logcat | grep -i "Google Maps"`). Rebuild after adding. |
+| Map tiles do not load | Check the phone's internet connection. OpenStreetMap tiles load online and the public tile service may be temporarily unavailable. |
 | Background location never starts | Running in Expo Go (unsupported) — use a dev build. Check foreground service permission in the manifest (`npx expo prebuild` then inspect `android/app/src/main/AndroidManifest.xml`). |
 | "Account not active" after invite | Invitation `app_metadata` lacked `invited/organisation_id`; check `select * from profiles where id = ...` and the `account.invitation_applied` audit row. |
 | Uploads show "session" error | Refresh token expired or revoked; sign in again. |
