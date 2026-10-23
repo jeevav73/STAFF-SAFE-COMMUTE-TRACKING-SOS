@@ -72,6 +72,7 @@ describe('collection lifecycle', () => {
     expect(r).toEqual({ ok: true, background: true });
     const [, opts] = (Location.startLocationUpdatesAsync as jest.Mock).mock.calls[0];
     expect(opts.foregroundService.notificationTitle).toBe('Location sharing active');
+    expect(opts.accuracy).toBe(Location.Accuracy.Balanced);
     expect((await getLocalJourney())?.status).toBe('active');
   });
 

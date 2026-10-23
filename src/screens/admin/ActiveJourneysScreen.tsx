@@ -1,6 +1,6 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import { AppButton } from '../../components/AppButton';
 import { OfflineBanner } from '../../components/Banners';
@@ -22,15 +22,20 @@ export function useActiveJourneys() {
   const [items, setItems] = useState<JourneyWithEmployee[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const requestId = useRef(0);
   const load = useCallback(async () => {
+    const currentRequest = ++requestId.current;
     setLoading(true);
     try {
-      setItems(await listActiveJourneys());
-      setError(null);
+      const rows = await listActiveJourneys();
+      if (currentRequest === requestId.current) {
+        setItems(rows);
+        setError(null);
+      }
     } catch (e) {
-      setError(userMessage(e));
+      if (currentRequest === requestId.current) setError(userMessage(e));
     } finally {
-      setLoading(false);
+      if (currentRequest === requestId.current) setLoading(false);
     }
   }, []);
   useFocusEffect(useCallback(() => void load(), [load]));
@@ -48,7 +53,7 @@ export function useActiveJourneys() {
       return prev.map((j) => (j.id === row.id ? { ...j, ...row, employee: j.employee } : j));
     });
   }, load);
-  const now = useNow(5000);
+  const now = useNow(15_000);
   // Hide journeys whose expiry passed even before the server job marks them.
   const visible = (items ?? []).filter((j) => Date.parse(j.expires_at) > now);
   return { items: items ? visible : null, error, loading, load, now };

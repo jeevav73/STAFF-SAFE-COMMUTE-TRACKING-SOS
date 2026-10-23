@@ -32,7 +32,7 @@ const ACTION_LABEL: Record<SosStatus, string> = {
 
 export function SOSDetailScreen({ route }: Props) {
   const { alertId } = route.params;
-  const now = useNow(1000);
+  const now = useNow(15_000);
   const { data, error, loading, reload, refresh, refreshing } = useAsync(() => getSosDetail(alertId), alertId);
   const [note, setNote] = useState('');
   const [noteError, setNoteError] = useState<string | undefined>();

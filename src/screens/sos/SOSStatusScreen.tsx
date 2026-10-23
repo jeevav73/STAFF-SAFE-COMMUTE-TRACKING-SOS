@@ -51,7 +51,7 @@ const STATE_TEXT: Record<SosDeliveryState, { title: string; body: string; tone: 
 export function SOSStatusScreen({ route, navigation }: Props) {
   const { clientRequestId } = route.params;
   const { profile } = useAuth();
-  const now = useNow(1000);
+  const now = useNow(15_000);
   const [item, setItem] = useState<SosOutboxItem | null | undefined>(undefined);
   const [server, setServer] = useState<SosAlert | null>(null);
   const [retrying, setRetrying] = useState(false);

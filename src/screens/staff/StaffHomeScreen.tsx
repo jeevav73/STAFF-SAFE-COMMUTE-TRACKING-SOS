@@ -24,7 +24,7 @@ export function StaffHomeScreen() {
   const navigation = useNavigation<Nav>();
   const { profile } = useAuth();
   const { online } = useNetwork();
-  const now = useNow(1000);
+  const now = useNow(30_000);
   const [state, setState] = useState<ReconcileOutcome | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);

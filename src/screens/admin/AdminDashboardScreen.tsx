@@ -62,8 +62,12 @@ export function AdminDashboardScreen() {
     void registerForPush(false);
   }, []);
 
-  useRealtimeTable('admin-dash-sos', 'sos_alerts', () => void load(), load, undefined, !!profile);
-  useRealtimeTable('admin-dash-journeys', 'journeys', () => void load(), load, undefined, !!profile);
+  useRealtimeTable('admin-dash-sos', 'sos_alerts', (change) => {
+    if (change.eventType !== 'UPDATE' || change.old.alert_status !== change.new.alert_status) void load();
+  }, load, undefined, !!profile);
+  useRealtimeTable('admin-dash-journeys', 'journeys', (change) => {
+    if (change.eventType !== 'UPDATE' || change.old.status !== change.new.status) void load();
+  }, load, undefined, !!profile);
 
   if (!summary && !error) return <LoadingState label="Loading dashboard…" />;
   if (!summary && error) return <ErrorState message={error} onRetry={load} />;

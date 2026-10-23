@@ -33,7 +33,7 @@ type Dialog = null | 'arrive' | 'stop' | 'sos';
 export function ActiveJourneyScreen({ navigation }: Props) {
   const { profile } = useAuth();
   const { online } = useNetwork();
-  const now = useNow(1000);
+  const now = useNow(5_000);
   const { status: loc, journey: local } = useLocationStatus();
   const [server, setServer] = useState<Journey | null | undefined>(undefined);
   const [collecting, setCollecting] = useState<boolean | null>(null);

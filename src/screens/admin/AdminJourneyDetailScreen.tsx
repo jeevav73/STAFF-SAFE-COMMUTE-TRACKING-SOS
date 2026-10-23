@@ -20,7 +20,7 @@ type Props = NativeStackScreenProps<AdminStackParamList, 'AdminJourneyDetail'>;
 
 export function AdminJourneyDetailScreen({ route, navigation }: Props) {
   const { journeyId } = route.params;
-  const now = useNow(1000);
+  const now = useNow(5_000);
   // Every open of this screen is written to the audit log by the server function.
   const { data, error, loading, reload, refresh, refreshing } = useAsync(() => getJourneyDetail(journeyId), journeyId);
   useRealtimeTable(`admin-journey-${journeyId}`, 'journeys', () => void refresh(), refresh, `id=eq.${journeyId}`);

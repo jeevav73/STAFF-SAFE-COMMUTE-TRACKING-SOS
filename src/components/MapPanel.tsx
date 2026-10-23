@@ -90,6 +90,7 @@ const OPEN_STREET_MAP_HTML = `<!DOCTYPE html>
     </script>
   </body>
 </html>`;
+const OPEN_STREET_MAP_SOURCE = { html: OPEN_STREET_MAP_HTML };
 
 function OpenStreetMap({ points, onSelect }: { points: MapPoint[]; onSelect?: (id: string) => void }) {
   const webView = useRef<WebView<object> | null>(null);
@@ -126,7 +127,7 @@ function OpenStreetMap({ points, onSelect }: { points: MapPoint[]; onSelect?: (i
       <WebView<object>
         ref={webView}
         testID="in-app-map"
-        source={{ html: OPEN_STREET_MAP_HTML }}
+        source={OPEN_STREET_MAP_SOURCE}
         originWhitelist={['*']}
         javaScriptEnabled
         domStorageEnabled={false}

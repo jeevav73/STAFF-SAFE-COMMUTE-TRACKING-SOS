@@ -38,7 +38,7 @@ export async function startLocationCollection(journey: Journey): Promise<StartRe
 
   try {
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-      accuracy: Location.Accuracy.High,
+      accuracy: Location.Accuracy.Balanced,
       timeInterval: LOCATION_UPDATE.timeIntervalMs,
       distanceInterval: LOCATION_UPDATE.distanceIntervalM,
       deferredUpdatesInterval: LOCATION_UPDATE.deferredUpdatesIntervalMs,
